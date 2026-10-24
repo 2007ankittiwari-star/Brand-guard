@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f6f5f0" />
+  <title>BrandGuard — Content Review</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="BrandGuard home">
+        <span class="brand-mark">B<span>.</span></span>
+        <span class="brand-name">brandguard<small>CONTENT INTEGRITY</small></span>
+      </a>
+
+      <div class="workspace-label">WORKSPACE</div>
+
+      <nav class="nav-list" aria-label="Main navigation">
+        <button class="nav-item active" data-view="editor">
+          <span class="nav-icon">▤</span>
+          Content review
+          <span class="nav-count">01</span>
+        </button>
+        
+        <button class="nav-item" data-view="guidelines">
+          <span class="nav-icon">≡</span>
+          Brand guidelines
+        </button>
+        <button class="nav-item" data-view="history">
+          <span class="nav-icon">↺</span>
+          Review history
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="system-status">
+          <span class="status-dot"></span>
+          <div>
+            <strong>Workspace active</strong>
+            <small>Demo environment</small>
+          </div>
+        </div>
+
+        <div class="profile">
+          <div class="avatar">BG</div>
+          <div class="profile-info">
+            <strong>Brand Team</strong>
+            <small>Content workspace</small>
+          </div>
+          <span class="profile-menu">···</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main application -->
+    <main class="main-area">
+
+      <header class="topbar">
+        <div class="breadcrumb">
+          Workspace <span>/</span> <strong id="breadcrumb-page">Content review</strong>
+        </div>
+        <div class="topbar-right">
+          <span class="environment-label">PROTOTYPE</span>
+          <span class="topbar-date">Content integrity, by design.</span>
+        </div>
+      </header>
+
+      <!-- Content review view -->
+      <section class="page-view" id="editor-view">
+
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">REVIEW DESK / 001</div>
+            <h1>Make every claim<br class="mobile-break" /> accountable.</h1>
+            <p class="page-description">
+              Check the facts. Protect the voice. Keep the meaning.
+            </p>
+          </div>
+
+          <div class="review-status" id="review-status">
+            <span class="status-dot"></span>
+            Draft in progress
+          </div>
+        </div>
+
+        <div class="metrics-row">
+          <div class="metric">
+            <span class="metric-label">APPROVED FACTS</span>
+            <strong id="fact-count">08</strong>
+            <span class="metric-note">Available for verification</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">CURRENT FINDINGS</span>
+            <strong id="finding-count">—</strong>
+            <span class="metric-note">From the current audit</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">REVIEW STATUS</span>
+            <strong class="metric-status" id="metric-status">Draft</strong>
+            <span class="metric-note">Human approval required</span>
+          </div>
+        </div>
+
+        <div class="review-grid">
+
+          <!-- Writing area -->
+          <section class="panel editor-panel">
+            <div class="panel-header">
+              <div>
+                <div class="eyebrow">01 / YOUR CONTENT</div>
+                <h2>The working draft</h2>
+              </div>
+              <span class="document-type">DOCUMENT</span>
+            </div>
+
+            <div class="form-group">
+             <label for="brand-name">Brand / Product Name</label>
+             <input
+               type="text"
+               id="brand-name"
+               placeholder="e.g. Samsung Galaxy S 24"
+             />
+           </div>
+
+            <div class="field-row">
+              <label for="document-title">Document name</label>
+              <input id="document-title" type="text"
+                     placeholder="Enter the Subject/Title" />
+            </div>
+
+            <div class="field-row">
+              <label for="template-select">Publishing format</label>
+              <select id="template-select">
+                <option value="Social Post">Social Post</option>
+                <option value="Blog">Blog</option>
+                <option value="Email">Email</option>
+              </select>
+            </div>
+
+            <div class="editor-toolbar">
+              <span>EDITOR</span>
+              <span id="word-count">0 words</span>
+            </div>
+
+            <div class="text-editor-wrap">
+              <textarea id="draft-text" spellcheck="true"
+                aria-label="Marketing content draft"
+                placeholder="Paste your marketing copy here..."></textarea>
+            </div>
+
+            <div class="editor-footer">
+              <span><span class="small-dot"></span> Original wording preserved</span>
+              <span id="last-audit">Not yet audited</span>
+            </div>
+
+            <div class="editor-actions">
+              <button class="button button-secondary" id="reset-button">
+                Reset example
+              </button>
+              <button class="button button-primary" id="audit-button">
+                <span>Run content audit</span>
+                <span aria-hidden="true">↗</span>
+              </button>
+            </div>
+
+            <p class="privacy-note">
+              Demo mode · Content is processed locally in your browser.
+            </p>
+          </section>
+
+          <!-- Findings area -->
+          <section class="panel findings-panel">
+            <div class="panel-header findings-header">
+              <div>
+                <div class="eyebrow">02 / VERIFICATION</div>
+                <h2>Audit findings</h2>
+              </div>
+              <span class="findings-counter" id="findings-badge">—</span>
+            </div>
+
+            <div class="audit-summary" id="audit-summary">
+              <div class="summary-symbol">↳</div>
+              <div>
+                <strong>Ready for review</strong>
+                <p>Run an audit to inspect claims against approved brand facts and guidelines.</p>
+              </div>
+            </div>
+
+            <div id="findings-list" class="findings-list">
+              <div class="empty-state">
+                <div class="empty-icon">⌕</div>
+                <strong>Your evidence will appear here.</strong>
+                <p>Audit the draft to see claim-level findings, source references, and suggested edits.</p>
+              </div>
+            </div>
+            
+
+            <div class="findings-legend">
+              <span><i class="legend-dot danger-dot"></i> Fact mismatch</span>
+              <span><i class="legend-dot warning-dot"></i> Needs verification</span>
+              <span><i class="legend-dot green-dot"></i> Supported</span>
+            </div>
+          </section>
+        </div>
+
+        <!-- Revision area -->
+        <section class="panel revision-panel" id="revision-panel">
+          <div class="panel-header">
+            <div>
+              <div class="eyebrow">03 / REVISION</div>
+              <h2>Keep the intent. Fix the claim.</h2>
+            </div>
+            <span class="quiet-tag">SUGGESTED EDIT</span>
+          </div>
+
+          <div class="revision-grid">
+            <div class="revision-copy original-copy">
+              <span class="revision-label">ORIGINAL</span>
+              <p id="original-preview">
+                Run an audit to compare the original with a suggested revision.
+              </p>
+            </div>
+
+            <div class="revision-arrow" aria-hidden="true">→</div>
+
+            <div class="revision-copy suggested-copy">
+              <span class="revision-label">SUGGESTED REVISION</span>
+              <p id="suggested-preview">
+                Your suggested revision will appear here.
+              </p>
+            </div>
+          </div>
+
+          <div class="revision-actions">
+            <span class="revision-note" id="revision-note">
+              Suggestions require human review.
+            </span>
+            <button class="button button-secondary" id="keep-button" disabled>
+              Keep original
+            </button>
+            <button class="button button-primary" id="accept-button" disabled>
+              Accept revision <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- Approval area -->
+        <section class="approval-strip">
+          <div class="approval-copy">
+            <div class="approval-icon">✓</div>
+            <div>
+              <h3>Human judgment stays in the loop.</h3>
+              <p id="approval-message">
+                Complete the audit and review the draft before requesting approval.
+              </p>
+            </div>
+          </div>
+
+          <button class="button button-dark" id="submit-button" disabled>
+            Submit for review <span aria-hidden="true">→</span>
+          </button>
+        </section>
+
+        <!-- Reviewer section -->
+        <section class="panel reviewer-panel" id="reviewer-panel">
+          <div class="panel-header">
+            <div>
+              <div class="eyebrow">04 / HUMAN REVIEW</div>
+              <h2>Review decision</h2>
+            </div>
+            <span class="quiet-tag">REVIEWER DESK</span>
+          </div>
+
+          <div class="reviewer-body">
+            <div class="reviewer-info">
+              <strong>Content reviewer</strong>
+              <p>Check the final wording and leave a decision for the creator.</p>
+              <div class="reviewer-state" id="reviewer-state">
+                Awaiting submission
+              </div>
+            </div>
+
+            <div class="reviewer-comment">
+              <label for="review-comment">Reviewer comment</label>
+              <textarea id="review-comment" rows="3"
+                placeholder="Add a comment or explain what needs to change..."></textarea>
+            </div>
+          </div>
+
+          <div class="reviewer-actions">
+            <button class="button button-secondary" id="return-button" disabled>
+              Return for revision
+            </button>
+            <button class="button button-primary" id="approve-button" disabled>
+              Approve content <span aria-hidden="true">✓</span>
+            </button>
+          </div>
+        </section>
+
+        <footer class="page-footer">
+          <span>BRANDGUARD / CONTENT INTEGRITY WORKSPACE</span>
+          <span>AI-assisted review. Human-approved decisions.</span>
+        </footer>
+      </section>
+
+      <!-- Approved facts view -->
+      <section class="page-view hidden" id="facts-view">
+        <div class="page-heading simple-heading">
+          <div>
+            <div class="eyebrow">KNOWLEDGE BASE / 001</div>
+            <h1>Approved facts.</h1>
+            <p class="page-description">
+              The source of truth used to check marketing claims.
+            </p>
+          </div>
+          <span class="review-status"><span class="status-dot"></span> Demo dataset</span>
+        </div>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="eyebrow">SOURCE LIBRARY</div>
+              <h2>Verified brand information</h2>
+            </div>
+            <span class="quiet-tag" id="facts-total">08 RECORDS</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>FACT ID</th><th>APPROVED INFORMATION</th><th>SOURCE</th><th>STATUS</th></tr>
+              </thead>
+              <tbody id="facts-table"></tbody>
+            </table>
+          </div>
+          <p class="privacy-note">Illustrative product data for the BrandGuard demo. Replace with genuine, approved company facts before real use.</p>
+        </section>
+      </section>
+
+      <!-- Guidelines view -->
+      <section class="page-view hidden" id="guidelines-view">
+        <div class="page-heading simple-heading">
+          <div>
+            <div class="eyebrow">BRAND SYSTEM / 002</div>
+            <h1>Rules of the voice.</h1>
+            <p class="page-description">Keep the brand consistent without rewriting its personality.</p>
+          </div>
+        </div>
+
+        <div class="guideline-grid">
+          <article class="panel guideline-card">
+            <span class="eyebrow">01 / TONE</span>
+            <h2>Clear, human, confident.</h2>
+            <p>Prefer specific, plain language over exaggerated promises and empty superlatives.</p>
+            <span class="guideline-tag">VOICE</span>
+          </article>
+          <article class="panel guideline-card">
+            <span class="eyebrow">02 / EVIDENCE</span>
+            <h2>Evidence before assertion.</h2>
+            <p>Product numbers and objective claims must match an approved source.</p>
+            <span class="guideline-tag">FACTUAL ACCURACY</span>
+          </article>
+          <article class="panel guideline-card">
+            <span class="eyebrow">03 / SAFETY</span>
+            <h2>No guaranteed outcomes.</h2>
+            <p>Do not present unverified health, fitness, or performance outcomes as guaranteed.</p>
+            <span class="guideline-tag">CLAIM POLICY</span>
+          </article>
+          <article class="panel guideline-card">
+            <span class="eyebrow">04 / EDITING</span>
+            <h2>Preserve the writer's intent.</h2>
+            <p>Make the smallest useful change. Keep the original wording available for review.</p>
+            <span class="guideline-tag">EDITORIAL CONTROL</span>
+          </article>
+        </div>
+      </section>
+
+      <!-- History view -->
+      <section class="page-view hidden" id="history-view">
+        <div class="page-heading simple-heading">
+          <div>
+            <div class="eyebrow">AUDIT TRAIL / 003</div>
+            <h1>Every decision, recorded.</h1>
+            <p class="page-description">A local session history of audits, revisions, and reviewer actions.</p>
+          </div>
+        </div>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="eyebrow">RECENT ACTIVITY</div>
+              <h2>Review history</h2>
+            </div>
+          </div>
+          <div id="history-list" class="history-list">
+            <div class="empty-state">
+              <strong>No activity recorded yet.</strong>
+              <p>Run an audit or make a review decision to see it here.</p>
+            </div>
+          </div>
+        </section>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
