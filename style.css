@@ -1209,6 +1209,32 @@ td:last-child {
   white-space: nowrap;
 }
 
+/* Incomplete audits */
+
+.nav-count:empty {
+  display: none;
+}
+
+#incomplete-list .mini-button {
+  margin: 8px 8px 0 0;
+}
+
+#incomplete-list .mini-button[data-action="resume"] {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+}
+
+#incomplete-list .mini-button[data-action="resume"]:hover {
+  background: #264a34;
+}
+
+#incomplete-list .mini-button[data-action="discard"]:hover {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: var(--red);
+}
+
 /* Footer and toast */
 
 .page-footer {
