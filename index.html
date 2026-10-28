@@ -26,16 +26,25 @@
         <button class="nav-item active" data-view="editor">
           <span class="nav-icon">▤</span>
           Content review
-          <span class="nav-count">01</span>
+          <span class="nav-count"></span>
         </button>
-        
-        <button class="nav-item" data-view="guidelines">
-          <span class="nav-icon">≡</span>
-          Brand guidelines
+
+        <button class="nav-item" data-view="incomplete">
+          <span class="nav-icon">◔</span>
+          Incomplete audits
+          <span class="nav-count"></span>
         </button>
+
         <button class="nav-item" data-view="history">
           <span class="nav-icon">↺</span>
           Review history
+          <span class="nav-count"></span>
+        </button>
+
+        <button class="nav-item" data-view="guidelines">
+          <span class="nav-icon">≡</span>
+          Brand guidelines
+          <span class="nav-count"></span>
         </button>
       </nav>
 
@@ -44,7 +53,7 @@
           <span class="status-dot"></span>
           <div>
             <strong>Workspace active</strong>
-            <small>Demo environment</small>
+            <small></small>
           </div>
         </div>
 
@@ -347,7 +356,7 @@
       <section class="page-view hidden" id="guidelines-view">
         <div class="page-heading simple-heading">
           <div>
-            <div class="eyebrow">BRAND SYSTEM / 002</div>
+            <div class="eyebrow">BRAND SYSTEM / 004</div>
             <h1>Rules of the voice.</h1>
             <p class="page-description">Keep the brand consistent without rewriting its personality.</p>
           </div>
@@ -404,6 +413,33 @@
               <p>Run an audit or make a review decision to see it here.</p>
             </div>
           </div>
+        </section>
+      </section>
+
+      <!-- Incomplete audits view -->
+      <section class="page-view hidden" id="incomplete-view">
+        <div class="page-heading simple-heading">
+          <div>
+            <div class="eyebrow">SAVED PROGRESS / 002</div>
+            <h1>Pick up where you left off.</h1>
+            <p class="page-description">Unfinished audits are saved automatically so you never have to start from scratch.</p>
+          </div>
+        </div>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="eyebrow">IN PROGRESS</div>
+              <h2>Incomplete audits</h2>
+            </div>
+          </div>
+          <div id="incomplete-list" class="history-list">
+            <div class="empty-state">
+              <strong>No unfinished audits.</strong>
+              <p>Drafts you leave before approval will be saved here automatically.</p>
+            </div>
+          </div>
+          <p class="privacy-note">Saved in this browser only. Clearing site data or switching devices will remove them.</p>
         </section>
       </section>
 

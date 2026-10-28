@@ -355,6 +355,7 @@ async function runAudit() {
     );
 
     showToast("AI audit complete. Review the findings.");
+    saveProgress();
 
   } catch (error) {
     console.error("BrandGuard AI audit error:", error);
@@ -468,6 +469,7 @@ $("#accept-button").addEventListener("click", () => {
   );
 
   showToast("Revision applied. Re-run the audit before submission.");
+  saveProgress();
 });
 
 $("#keep-button").addEventListener("click", () => {
@@ -500,6 +502,7 @@ $("#keep-button").addEventListener("click", () => {
   );
 
   showToast("Original wording retained. Reviewer approval is still required.");
+  saveProgress();
 });
 
 /* -----------------------------------------
@@ -543,6 +546,7 @@ $("#submit-button").addEventListener("click", () => {
   });
 
   showToast("Submitted for review. A reviewer decision is now required.");
+  saveProgress();
 });
 
 $("#approve-button").addEventListener("click", () => {
@@ -564,6 +568,7 @@ $("#approve-button").addEventListener("click", () => {
   );
 
   showToast("Demo decision recorded: approved.");
+  saveProgress();
 });
 
 $("#return-button").addEventListener("click", () => {
@@ -589,6 +594,7 @@ $("#return-button").addEventListener("click", () => {
   );
 
   showToast("Draft returned for revision.");
+  saveProgress();
 });
 
 /* -----------------------------------------
@@ -599,6 +605,7 @@ const viewNames = {
   editor: "Content review",
   facts: "Approved facts",
   guidelines: "Brand guidelines",
+  incomplete: "Incomplete audits",
   history: "Review history"
 };
 
@@ -772,10 +779,241 @@ $("#template-select").addEventListener("change", () => {
 });
 
 /* -----------------------------------------
+   Incomplete audits (save & resume)
+   ----------------------------------------- */
+
+const INCOMPLETE_STORAGE_KEY = "brandguard_incomplete_audits";
+let incompleteAudits = [];
+let currentDraftId = newDraftId();
+let saveTimer;
+
+function newDraftId() {
+  return "draft-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7);
+}
+
+function loadIncompleteAudits() {
+  try {
+    const saved = localStorage.getItem(INCOMPLETE_STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) incompleteAudits = parsed;
+    }
+  } catch (error) {
+    console.error("Could not load incomplete audits:", error);
+  }
+}
+
+function persistIncompleteAudits() {
+  try {
+    localStorage.setItem(
+      INCOMPLETE_STORAGE_KEY,
+      JSON.stringify(incompleteAudits)
+    );
+  } catch (error) {
+    console.error("Could not save incomplete audits:", error);
+  }
+}
+
+function removeIncomplete(id) {
+  incompleteAudits = incompleteAudits.filter(item => item.id !== id);
+  persistIncompleteAudits();
+  renderIncomplete();
+}
+
+function saveProgress() {
+  const draft = $("#draft-text").value.trim();
+
+  if (!draft) return;
+
+  // A finished audit is no longer "incomplete".
+  if (state.decision === "Approved") {
+    removeIncomplete(currentDraftId);
+    return;
+  }
+
+  // Don't save the untouched example draft.
+  if (!state.auditComplete && draft === originalExample.trim()) return;
+
+  const entry = {
+    id: currentDraftId,
+    title: $("#document-title").value.trim() || "Untitled draft",
+    brand: $("#brand-name")?.value || "",
+    template: $("#template-select").value,
+    draft: $("#draft-text").value,
+    comment: $("#review-comment").value,
+    decision: state.decision,
+    updatedAt: Date.now(),
+    state: {
+      findings: state.findings,
+      auditComplete: state.auditComplete,
+      acceptedRevision: state.acceptedRevision,
+      overridden: state.overridden,
+      submitted: state.submitted,
+      originalDraft: state.originalDraft,
+      suggestedDraft: state.suggestedDraft
+    }
+  };
+
+  const index = incompleteAudits.findIndex(item => item.id === entry.id);
+  if (index >= 0) incompleteAudits[index] = entry;
+  else incompleteAudits.push(entry);
+
+  incompleteAudits.sort((a, b) => b.updatedAt - a.updatedAt);
+  persistIncompleteAudits();
+  renderIncomplete();
+}
+
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveProgress, 500);
+}
+
+function renderIncomplete() {
+  const container = $("#incomplete-list");
+  const badge = $("#incomplete-count");
+
+  if (badge) badge.textContent = incompleteAudits.length || "";
+  if (!container) return;
+
+  if (!incompleteAudits.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <strong>No unfinished audits.</strong>
+        <p>Drafts you leave before approval will be saved here automatically.</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = incompleteAudits.map(item => {
+    const words = item.draft.trim().split(/\s+/).filter(Boolean).length;
+    return `
+      <div class="history-item">
+        <div class="history-symbol">↳</div>
+        <div>
+          <strong>${escapeHTML(item.title)}</strong>
+          <p>${escapeHTML(item.decision)} · ${words} words · saved
+            ${escapeHTML(new Date(item.updatedAt).toLocaleString([], {
+              day: "numeric", month: "short",
+              hour: "2-digit", minute: "2-digit"
+            }))}</p>
+          <button class="mini-button" data-action="resume"
+            data-id="${escapeHTML(item.id)}">Resume</button>
+          <button class="mini-button" data-action="discard"
+            data-id="${escapeHTML(item.id)}">Discard</button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function resumeAudit(id) {
+  const entry = incompleteAudits.find(item => item.id === id);
+  if (!entry) return;
+
+  currentDraftId = entry.id;
+
+  $("#draft-text").value = entry.draft;
+  $("#document-title").value = entry.title;
+  if ($("#brand-name")) $("#brand-name").value = entry.brand || "";
+  $("#template-select").value = entry.template;
+
+  resetReviewState();
+
+  const saved = entry.state;
+
+  if (saved && saved.auditComplete) {
+    state.findings = saved.findings || [];
+    state.auditComplete = true;
+    state.acceptedRevision = !!saved.acceptedRevision;
+    state.overridden = !!saved.overridden;
+    state.submitted = !!saved.submitted;
+    state.originalDraft = saved.originalDraft || "";
+    state.suggestedDraft = saved.suggestedDraft || "";
+
+    const verdict = state.findings[0]?.title || "Needs revision";
+    const changed = entry.draft.trim() !== state.originalDraft;
+
+    $("#finding-count").textContent = verdict === "Looks good" ? "0" : "1";
+    $("#findings-badge").textContent = "1";
+    $("#last-audit").textContent = changed
+      ? "Changes not yet audited"
+      : "Restored from saved progress";
+
+    $("#original-preview").textContent = state.originalDraft;
+    $("#suggested-preview").textContent = state.suggestedDraft;
+
+    $("#audit-summary").innerHTML = `
+      <div class="summary-symbol">↳</div>
+      <div>
+        <strong>${escapeHTML(verdict)}</strong>
+        <p>Audit restored from your saved progress. Pick up where you left off.</p>
+      </div>
+    `;
+
+    renderFindings();
+
+    $("#accept-button").disabled =
+      state.acceptedRevision ||
+      state.suggestedDraft === state.originalDraft;
+    $("#keep-button").disabled = false;
+    $("#submit-button").disabled = state.submitted || changed;
+    $("#approve-button").disabled = !state.submitted;
+    $("#return-button").disabled = !state.submitted;
+
+    $("#revision-note").textContent =
+      "AI suggestions require human review.";
+    $("#approval-message").textContent = changed
+      ? "The draft changed after its audit. Run a new audit before submitting."
+      : "Review the AI findings and choose whether to accept the revision or keep the original.";
+
+    updateStatus(entry.decision || "Audit complete");
+  }
+
+  $("#review-comment").value = entry.comment || "";
+  updateWordCount();
+  showView("editor");
+  showToast(`Resumed "${entry.title}".`);
+}
+
+$("#incomplete-list").addEventListener("click", event => {
+  const button = event.target.closest("button[data-action]");
+  if (!button) return;
+
+  if (button.dataset.action === "resume") resumeAudit(button.dataset.id);
+
+  if (button.dataset.action === "discard") {
+    removeIncomplete(button.dataset.id);
+    showToast("Unfinished audit discarded.");
+  }
+});
+
+// Save when the user leaves or switches away from the tab.
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") saveProgress();
+});
+window.addEventListener("pagehide", saveProgress);
+
+// Autosave while typing, and start a fresh draft ID on reset.
+$("#draft-text").addEventListener("input", scheduleSave);
+$("#document-title").addEventListener("input", scheduleSave);
+$("#review-comment").addEventListener("input", scheduleSave);
+$("#reset-button").addEventListener("click", () => {
+  currentDraftId = newDraftId();
+});
+
+/* -----------------------------------------
    Initialisation
    ----------------------------------------- */
 loadReviewHistory();
 renderFacts();
 renderHistory();
+updateWordCount();
+resetReviewState();
+loadReviewHistory();
+loadIncompleteAudits();
+renderFacts();
+renderHistory();
+renderIncomplete();
 updateWordCount();
 resetReviewState();
