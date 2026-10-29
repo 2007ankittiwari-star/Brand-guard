@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,19 +31,17 @@
         <button class="nav-item" data-view="incomplete">
           <span class="nav-icon">◔</span>
           Incomplete audits
-          <span class="nav-count"></span>
+          <span class="nav-count" id="incomplete-count"></span>
         </button>
 
         <button class="nav-item" data-view="history">
           <span class="nav-icon">↺</span>
           Review history
-          <span class="nav-count"></span>
         </button>
 
         <button class="nav-item" data-view="guidelines">
           <span class="nav-icon">≡</span>
           Brand guidelines
-          <span class="nav-count"></span>
         </button>
       </nav>
 
@@ -53,7 +50,6 @@
           <span class="status-dot"></span>
           <div>
             <strong>Workspace active</strong>
-            <small></small>
           </div>
         </div>
 
@@ -63,7 +59,7 @@
             <strong>Brand Team</strong>
             <small>Content workspace</small>
           </div>
-          <span class="profile-menu">···</span>
+          <span class="profile-menu"></span>
         </div>
       </div>
     </aside>
@@ -86,7 +82,7 @@
 
         <div class="page-heading">
           <div>
-            <div class="eyebrow">REVIEW DESK / 001</div>
+            <div class="eyebrow">REVIEW DESK</div>
             <h1>Make every claim<br class="mobile-break" /> accountable.</h1>
             <p class="page-description">
               Check the facts. Protect the voice. Keep the meaning.
@@ -101,9 +97,9 @@
 
         <div class="metrics-row">
           <div class="metric">
-            <span class="metric-label">APPROVED FACTS</span>
-            <strong id="fact-count">08</strong>
-            <span class="metric-note">Available for verification</span>
+            <span class="metric-label">SEO SCORE</span>
+            <strong id="metric-seo">—</strong>
+            <span class="metric-note">Out of 100</span>
           </div>
           <div class="metric">
             <span class="metric-label">CURRENT FINDINGS</span>
@@ -123,7 +119,7 @@
           <section class="panel editor-panel">
             <div class="panel-header">
               <div>
-                <div class="eyebrow">01 / YOUR CONTENT</div>
+                <div class="eyebrow">YOUR CONTENT</div>
                 <h2>The working draft</h2>
               </div>
               <span class="document-type">DOCUMENT</span>
@@ -139,17 +135,10 @@
            </div>
 
             <div class="field-row">
-              <label for="document-title">Document name</label>
-              <input id="document-title" type="text"
-                     placeholder="Enter the Subject/Title" />
-            </div>
-
-            <div class="field-row">
               <label for="template-select">Publishing format</label>
               <select id="template-select">
+                 <option value="ad">Advertisement</option>
                 <option value="Social Post">Social Post</option>
-                <option value="Blog">Blog</option>
-                <option value="Email">Email</option>
               </select>
             </div>
 
@@ -161,7 +150,7 @@
             <div class="text-editor-wrap">
               <textarea id="draft-text" spellcheck="true"
                 aria-label="Marketing content draft"
-                placeholder="Paste your marketing copy here..."></textarea>
+                placeholder="Paste your marketing ad here..."></textarea>
             </div>
 
             <div class="editor-footer">
@@ -170,25 +159,18 @@
             </div>
 
             <div class="editor-actions">
-              <button class="button button-secondary" id="reset-button">
-                Reset example
-              </button>
               <button class="button button-primary" id="audit-button">
                 <span>Run content audit</span>
                 <span aria-hidden="true">↗</span>
               </button>
             </div>
-
-            <p class="privacy-note">
-              Demo mode · Content is processed locally in your browser.
-            </p>
           </section>
 
           <!-- Findings area -->
           <section class="panel findings-panel">
             <div class="panel-header findings-header">
               <div>
-                <div class="eyebrow">02 / VERIFICATION</div>
+                <div class="eyebrow">VERIFICATION</div>
                 <h2>Audit findings</h2>
               </div>
               <span class="findings-counter" id="findings-badge">—</span>
@@ -223,7 +205,7 @@
         <section class="panel revision-panel" id="revision-panel">
           <div class="panel-header">
             <div>
-              <div class="eyebrow">03 / REVISION</div>
+              <div class="eyebrow">REVISION</div>
               <h2>Keep the intent. Fix the claim.</h2>
             </div>
             <span class="quiet-tag">SUGGESTED EDIT</span>
@@ -277,41 +259,28 @@
           </button>
         </section>
 
-        <!-- Reviewer section -->
-        <section class="panel reviewer-panel" id="reviewer-panel">
+        <!-- SEO content score -->
+        <section class="panel seo-panel" id="seo-panel">
           <div class="panel-header">
             <div>
-              <div class="eyebrow">04 / HUMAN REVIEW</div>
-              <h2>Review decision</h2>
+              <div class="eyebrow">SEARCH VISIBILITY</div>
+              <h2>SEO content score</h2>
             </div>
-            <span class="quiet-tag">REVIEWER DESK</span>
+            <span class="quiet-tag">OUT OF 100</span>
           </div>
-
-          <div class="reviewer-body">
-            <div class="reviewer-info">
-              <strong>Content reviewer</strong>
-              <p>Check the final wording and leave a decision for the creator.</p>
-              <div class="reviewer-state" id="reviewer-state">
-                Awaiting submission
-              </div>
-            </div>
-
-            <div class="reviewer-comment">
-              <label for="review-comment">Reviewer comment</label>
-              <textarea id="review-comment" rows="3"
-                placeholder="Add a comment or explain what needs to change..."></textarea>
-            </div>
-          </div>
-
-          <div class="reviewer-actions">
-            <button class="button button-secondary" id="return-button" disabled>
-              Return for revision
-            </button>
-            <button class="button button-primary" id="approve-button" disabled>
-              Approve content <span aria-hidden="true">✓</span>
-            </button>
-          </div>
+          <div id="seo-body" class="seo-body"></div>
         </section>
+
+        
+        <p style="text-align:right;">Click on 'Submit for review' to enable Approve Button</p>
+        
+
+        <!-- Final approval -->
+        <div class="final-actions">
+          <button class="button button-primary" id="approve-button" disabled>
+            Approve content <span aria-hidden="true">✓</span>
+          </button>
+        </div>
 
         <footer class="page-footer">
           <span>BRANDGUARD / CONTENT INTEGRITY WORKSPACE</span>
@@ -319,44 +288,11 @@
         </footer>
       </section>
 
-      <!-- Approved facts view -->
-      <section class="page-view hidden" id="facts-view">
-        <div class="page-heading simple-heading">
-          <div>
-            <div class="eyebrow">KNOWLEDGE BASE / 001</div>
-            <h1>Approved facts.</h1>
-            <p class="page-description">
-              The source of truth used to check marketing claims.
-            </p>
-          </div>
-          <span class="review-status"><span class="status-dot"></span> Demo dataset</span>
-        </div>
-
-        <section class="panel">
-          <div class="panel-header">
-            <div>
-              <div class="eyebrow">SOURCE LIBRARY</div>
-              <h2>Verified brand information</h2>
-            </div>
-            <span class="quiet-tag" id="facts-total">08 RECORDS</span>
-          </div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr><th>FACT ID</th><th>APPROVED INFORMATION</th><th>SOURCE</th><th>STATUS</th></tr>
-              </thead>
-              <tbody id="facts-table"></tbody>
-            </table>
-          </div>
-          <p class="privacy-note">Illustrative product data for the BrandGuard demo. Replace with genuine, approved company facts before real use.</p>
-        </section>
-      </section>
-
       <!-- Guidelines view -->
       <section class="page-view hidden" id="guidelines-view">
         <div class="page-heading simple-heading">
           <div>
-            <div class="eyebrow">BRAND SYSTEM / 004</div>
+            <div class="eyebrow">BRAND SYSTEM </div>
             <h1>Rules of the voice.</h1>
             <p class="page-description">Keep the brand consistent without rewriting its personality.</p>
           </div>
@@ -364,25 +300,25 @@
 
         <div class="guideline-grid">
           <article class="panel guideline-card">
-            <span class="eyebrow">01 / TONE</span>
+            <span class="eyebrow"> TONE</span>
             <h2>Clear, human, confident.</h2>
             <p>Prefer specific, plain language over exaggerated promises and empty superlatives.</p>
             <span class="guideline-tag">VOICE</span>
           </article>
           <article class="panel guideline-card">
-            <span class="eyebrow">02 / EVIDENCE</span>
+            <span class="eyebrow">EVIDENCE</span>
             <h2>Evidence before assertion.</h2>
             <p>Product numbers and objective claims must match an approved source.</p>
             <span class="guideline-tag">FACTUAL ACCURACY</span>
           </article>
           <article class="panel guideline-card">
-            <span class="eyebrow">03 / SAFETY</span>
+            <span class="eyebrow">SAFETY</span>
             <h2>No guaranteed outcomes.</h2>
             <p>Do not present unverified health, fitness, or performance outcomes as guaranteed.</p>
             <span class="guideline-tag">CLAIM POLICY</span>
           </article>
           <article class="panel guideline-card">
-            <span class="eyebrow">04 / EDITING</span>
+            <span class="eyebrow">EDITING</span>
             <h2>Preserve the writer's intent.</h2>
             <p>Make the smallest useful change. Keep the original wording available for review.</p>
             <span class="guideline-tag">EDITORIAL CONTROL</span>
@@ -394,7 +330,7 @@
       <section class="page-view hidden" id="history-view">
         <div class="page-heading simple-heading">
           <div>
-            <div class="eyebrow">AUDIT TRAIL / 003</div>
+            <div class="eyebrow">AUDIT TRAIL </div>
             <h1>Every decision, recorded.</h1>
             <p class="page-description">A local session history of audits, revisions, and reviewer actions.</p>
           </div>
@@ -415,12 +351,12 @@
           </div>
         </section>
       </section>
-
+      
       <!-- Incomplete audits view -->
       <section class="page-view hidden" id="incomplete-view">
         <div class="page-heading simple-heading">
           <div>
-            <div class="eyebrow">SAVED PROGRESS / 002</div>
+            <div class="eyebrow">SAVED PROGRESS</div>
             <h1>Pick up where you left off.</h1>
             <p class="page-description">Unfinished audits are saved automatically so you never have to start from scratch.</p>
           </div>
