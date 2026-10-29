@@ -1,55 +1,96 @@
 # 🛡️ BrandGuard
+### Trust Every Claim. Verify Before You Publish.
 
-### Making marketing claims more trustworthy with AI
+**BrandGuard is an AI-powered content auditing platform that helps brands verify marketing claims, detect misleading information, maintain brand consistency, and optimize content before publication.**
 
-Marketing content is everywhere, but not every claim is accurate. A product might be advertised with exaggerated specifications, misleading promises, or statements that don't match the brand's actual information.
+## 🚨 The Problem
+Marketing content can contain unsupported claims, misleading promises, incorrect product information, and SEO weaknesses. Manual verification is time-consuming, and publishing inaccurate content can damage customer trust.
 
-**BrandGuard** is an AI-powered tool built to help identify these issues before marketing content goes public. It combines AI analysis with web research to check claims, evaluate brand alignment, and suggest improvements.
+## ✨ Key Features
 
-## ✨ What It Does
-
-- 🔎 **Fact-Checking:** Checks marketing claims against information found through web research.
-- 🏷️ **Brand Alignment:** Helps identify content that may not match a brand's facts or positioning.
-- ✍️ **Content Improvement:** Suggests clearer, more accurate alternatives to marketing copy.
-- 📚 **Evidence & Sources:** Provides source links to help users review the information behind an audit.
-- ⚠️ **Claim Analysis:** Helps distinguish supported, contradicted, and unverified claims.
+- **Claim-by-Claim Verification:** Identifies individual claims and classifies potential risks with supporting evidence.
+- **Web Research:** Uses Tavily search to gather relevant online sources for fact-checking.
+- **Brand Alignment:** Checks content against brand facts, product information, and guidelines.
+- **AI-Powered Rewriting:** Suggests safer, clearer, and more trustworthy alternatives.
+- **SEO Analysis:** Evaluates keywords, search intent, content structure, headlines and CTAs, format suitability, and trustworthiness.
+- **Structured Audit Reports:** Presents findings, evidence, source links, and suggested corrections.
+- **Review Workflow:** Supports submitting content for review, approval decisions, and revision requests.
+- **Review History & Recovery:** Helps users revisit previous audits and recover saved progress.
 
 ## ⚙️ How It Works
 
-1. Enter the marketing content you want to review.
-2. BrandGuard searches for relevant information using Tavily.
-3. Google's Gemini API analyzes the content against the available evidence.
-4. The tool returns an audit report with findings, sources, and suggested improvements.
+1. Enter the brand name, marketing draft, and any available brand facts.
+2. BrandGuard researches relevant information online.
+3. AI analyzes claims, brand alignment, content quality, and SEO.
+4. Review the findings, evidence, and suggested improvements.
+5. Revise the content and move it through the review workflow.
 
-AI-generated findings are intended to assist human review, not replace it. Search results can be incomplete, so important claims should still be verified.
+## 🧰 Tech Stack
 
-## 🛠️ Tech Stack
+| Technology | Purpose |
+|---|---|
+| HTML, CSS, JavaScript | Frontend and interactive dashboard |
+| Cloudflare Workers | Backend API |
+| Google Gemini | AI-powered auditing and rewriting |
+| Tavily Search API | Web research and evidence gathering |
+| Firebase Hosting | Frontend deployment |
 
-- **Frontend:** HTML, CSS, JavaScript
-- **AI Analysis:** Google Gemini API
-- **Web Research:** Tavily API
-- **Backend:** Cloudflare Workers
-- **Frontend Hosting:** Firebase Hosting
+## 🏗️ Architecture
+
+```text
+User
+  ↓
+BrandGuard Web Dashboard
+  ↓
+Cloudflare Worker API
+  ├── Tavily → Web Research
+  └── Gemini → AI Audit & Rewriting
+  ↓
+Audit Report + SEO Analysis
+```
 
 ## 🚀 Getting Started
 
-To run your own instance:
+**1. Clone the repository**
+```bash
+git clone <2007ankittiwari/brand-guard>
+cd BrandGuard
+```
 
-1. Clone this repository.
-2. Configure the frontend files and Firebase Hosting.
-3. Deploy the backend as a Cloudflare Worker.
-4. Add your Gemini and Tavily API keys as Cloudflare Worker secrets.
-5. Configure the frontend to call your deployed Worker URL.
-6. Deploy the frontend and test a complete audit.
+**2. Configure backend secrets**
 
-## 🔐 Security
+Set the following secrets in your Cloudflare Worker:
 
-API keys should never be committed to a public repository. Keep Gemini and Tavily credentials in Cloudflare Worker secrets rather than exposing them in frontend JavaScript.
+- `GEMINI_API_KEY`
+- `TAVILY_API_KEY`
 
-## 🎯 Why BrandGuard?
+**3. Connect the frontend**
 
-The goal is simple: help people create marketing content that is persuasive without sacrificing accuracy. By bringing AI analysis and web-based evidence together, BrandGuard makes it easier to spot questionable claims before they reach an audience.
+Configure the frontend to use your deployed Cloudflare Worker URL.
+
+**4. Deploy the frontend**
+
+Deploy the project using Firebase Hosting, ensuring the correct directory contains `index.html`, `style.css`, and `script.js`.
+
+## 🔐 Responsible AI & Security
+
+- Uses web sources to support claim verification.
+- Helps distinguish supported claims from potentially misleading ones.
+- Keeps API keys in backend environment secrets rather than exposing them in frontend code.
+- Provides recommendations to assist human reviewers, not replace their judgment.
+
+## 🌟 Why BrandGuard?
+
+BrandGuard combines **fact-checking, brand compliance, content improvement, SEO analysis, and human review** in one workflow. Instead of simply generating marketing copy, it helps teams evaluate whether that copy is accurate, credible, and ready for publication.
+
+## 🔮 Future Scope
+
+Potential improvements include integrations with publishing platforms, more advanced brand-policy management, automated monitoring of published claims, and expanded analytics.
+
+## 🤝 Contributing
+
+Contributions, ideas, and feedback are welcome. Fork the repository, create a branch, and submit a pull request.
 
 ---
 
-**Built as a hackathon project** with the idea that better marketing starts with better verification.
+**BrandGuard | Build trust before you publish.**
