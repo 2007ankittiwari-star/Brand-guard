@@ -68,9 +68,8 @@ Set the following secrets in your Cloudflare Worker:
 
 Configure the frontend to use your deployed Cloudflare Worker URL.
 
-**4. Deploy the frontend**
-
-Deploy the project using Firebase Hosting, ensuring the correct directory contains `index.html`, `style.css`, and `script.js`.
+** Deployed Project Link**
+https://brand-guard-de34a.web.app
 
 ## 🔐 Responsible AI & Security
 
