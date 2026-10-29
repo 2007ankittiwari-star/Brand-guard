@@ -68,7 +68,8 @@ Set the following secrets in your Cloudflare Worker:
 
 Configure the frontend to use your deployed Cloudflare Worker URL.
 
-** Deployed Project Link**
+**Deployed Project Link**
+
 https://brand-guard-de34a.web.app
 
 ## 🔐 Responsible AI & Security
