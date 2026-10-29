@@ -53,7 +53,7 @@ Audit Report + SEO Analysis
 
 **1. Clone the repository**
 ```bash
-git clone <2007ankittiwari/brand-guard>
+git clone <2007ankittiwari-star/brand-guard>
 cd BrandGuard
 ```
 
