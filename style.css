@@ -609,6 +609,7 @@ a {
 .button-primary {
   background: var(--green);
   color: white;
+  margin-bottom:20px;
 }
 
 .button-primary:hover:not(:disabled) {
@@ -1553,4 +1554,477 @@ td:last-child {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+
+/* Organized claim verification cards */
+
+.claim-card {
+  overflow: hidden;
+  margin-bottom: 18px;
+  padding: 20px;
+  border: 1px solid #e4e7df;
+  border-left: 4px solid #92948b;
+  border-radius: 14px;
+  background: #fffefa;
+  box-shadow: 0 3px 12px rgba(44, 53, 43, 0.04);
+}
+
+.claim-card.success {
+  border-left-color: #43805a;
+}
+
+.claim-card.danger {
+  border-left-color: #bd5147;
+}
+
+.claim-card.unverified,
+.claim-card.warning {
+  border-left-color: #92948b;
+}
+
+.claim-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.claim-card-header .finding-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.claim-card-header .finding-title strong {
+  display: block;
+  overflow-wrap: anywhere;
+  color: #303d33;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.claim-status {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.claim-status.success {
+  color: #356b48;
+  background: #e8f2e9;
+  border-color: #cfe3d1;
+}
+
+.claim-status.danger {
+  color: #a43e36;
+  background: #f8e9e6;
+  border-color: #eed0cb;
+}
+
+.claim-status.unverified,
+.claim-status.warning {
+  color: #62645d;
+  background: #efefeb;
+  border-color: #dedfd8;
+}
+
+.claim-section {
+  margin-top: 14px;
+  padding: 13px 14px;
+  border: 1px solid #e9eae4;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.claim-section-label {
+  display: block;
+  margin-bottom: 7px;
+  color: #777b72;
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 1px;
+}
+
+.claim-section p {
+  margin: 0;
+  color: #41463f;
+  font-size: 13px;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+
+.evidence-section {
+  background: #f8f9f5;
+}
+
+.claim-source {
+  display: grid;
+  gap: 6px;
+  margin-top: 13px;
+  padding-top: 12px;
+  border-top: 1px solid #e5e7df;
+  color: #555b51;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.claim-source-link {
+  width: fit-content;
+  color: #376d51;
+  font-size: 12px;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.claim-source-link:hover {
+  color: #244b36;
+}
+
+.suggested-fix {
+  background: #f2f6ef;
+  border-color: #dce7d6;
+}
+
+.suggested-fix .claim-section-label {
+  color: #47704d;
+}
+
+.claim-card .finding-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+@media (max-width: 560px) {
+  .claim-card {
+    padding: 14px;
+  }
+
+  .claim-card-header {
+    flex-wrap: wrap;
+  }
+
+  .claim-status {
+    margin-left: auto;
+  }
+}
+
+
+/* ==========================================
+   BRANDGUARD: AUDIT FINDINGS SCROLL LAYOUT
+   ========================================== */
+
+/* Allow the findings panel to manage its own content */
+.findings-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Keep the heading and audit summary in the normal layout */
+.findings-panel > .panel-header,
+.findings-panel > .audit-summary,
+.findings-panel > .findings-legend {
+  position: relative;
+  flex: 0 0 auto;
+  z-index: 1;
+}
+
+/* Only the claim list scrolls */
+#findings-list {
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  gap: 12px;
+
+  height: auto;
+  min-height: 0;
+  max-height: 620px;
+
+  margin: 0;
+  padding: 12px 17px;
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+
+  scrollbar-width: thin;
+  scrollbar-color: #c5c9bf transparent;
+}
+
+/* Keep each complete claim card intact */
+#findings-list > .finding {
+  display: block;
+  position: relative;
+  flex: 0 0 auto;
+
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+
+  margin: 0;
+  box-sizing: border-box;
+
+  overflow: visible;
+}
+
+/* Restore complete content inside organized claim cards */
+#findings-list > .claim-card {
+  padding: 17px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--green);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+#findings-list > .claim-card.danger {
+  border-left-color: var(--red);
+}
+
+#findings-list > .claim-card.warning,
+#findings-list > .claim-card.unverified {
+  border-left-color: var(--amber);
+}
+
+/* Prevent evidence text from being cut horizontally */
+#findings-list .claim-section,
+#findings-list .evidence-box,
+#findings-list .claim-source,
+#findings-list .suggested-fix {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+}
+
+/* Subtle scrollbar using the existing theme */
+#findings-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+#findings-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#findings-list::-webkit-scrollbar-thumb {
+  background: #c5c9bf;
+  border-radius: 8px;
+}
+
+#findings-list::-webkit-scrollbar-thumb:hover {
+  background: #829482;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  #findings-list {
+    max-height: 60vh;
+    padding: 10px 12px;
+  }
+
+  #findings-list > .claim-card {
+    padding: 13px;
+  }
+}
+
+/* =========================================
+   SEO content score
+   ========================================= */
+
+.seo-panel {
+  margin-top: 18px;
+}
+
+.seo-body {
+  padding: 19px;
+}
+
+.final-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 18px;
+}
+
+.final-actions .button {
+  margin-bottom: 0;
+}
+
+.seo-score-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.seo-score {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 12px 18px;
+  border: 1px solid var(--line);
+  background: #f6f5f0;
+}
+
+.seo-score strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 46px;
+  line-height: 1;
+  font-weight: 500;
+}
+
+.seo-score span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.seo-score.success strong { color: var(--green); }
+.seo-score.warning strong { color: var(--amber); }
+.seo-score.danger strong { color: var(--red); }
+
+.seo-score-meta strong {
+  font-size: 14px;
+}
+
+.seo-score-meta p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.seo-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 9px;
+}
+
+.seo-chip {
+  padding: 3px 7px;
+  background: var(--green-soft);
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.seo-breakdown {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 24px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.seo-category-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 11px;
+}
+
+.seo-category-top span {
+  color: var(--muted);
+}
+
+.seo-bar {
+  height: 5px;
+  margin: 7px 0;
+  background: #ecebe3;
+}
+
+.seo-bar i {
+  display: block;
+  height: 100%;
+}
+
+.seo-bar i.success { background: var(--green); }
+.seo-bar i.warning { background: var(--amber); }
+.seo-bar i.danger { background: var(--red); }
+
+.seo-category p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.seo-recs {
+  padding-top: 18px;
+}
+
+.seo-label {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.9px;
+}
+
+.seo-rec {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+
+.seo-rec-num {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  background: var(--green);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 50%;
+}
+
+.seo-rec strong {
+  font-size: 12px;
+}
+
+.seo-rec p {
+  margin: 4px 0 0;
+  color: #5d6057;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.seo-rec-action {
+  color: var(--ink) !important;
+}
+
+.seo-rec blockquote {
+  margin: 8px 0 0;
+  padding-left: 10px;
+  border-left: 2px solid #d9d8cd;
+  color: #65675e;
+  font-family: Georgia, serif;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.seo-note {
+  margin: 16px 0 0;
+  color: #96978d;
+  font-size: 9px;
+}
+
+@media (max-width: 650px) {
+  .seo-body { padding: 14px; }
+  .seo-score-row { flex-direction: column; align-items: flex-start; }
+  .seo-breakdown { grid-template-columns: 1fr; }
+  .final-actions .button { width: 100%; }
 }
