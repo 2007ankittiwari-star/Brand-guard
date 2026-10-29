@@ -85,7 +85,7 @@ BrandGuard combines **fact-checking, brand compliance, content improvement, SEO 
 
 ## 🔮 Future Scope
 
-Potential improvements include integrations with publishing platforms, more advanced brand-policy management, automated monitoring of published claims, and expanded analytics.
+Potential improvements include integrations with publishing platforms, multi-users management system, automated monitoring of published claims, and expanded analytics.
 
 ## 🤝 Contributing
 
